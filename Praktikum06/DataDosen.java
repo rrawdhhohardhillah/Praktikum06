@@ -1,5 +1,7 @@
 package Praktikum06;
 
+import java.util.Arrays;
+
 public class DataDosen {
     Dosen[] dataDosen = new Dosen[10];
     int idx = 0;
@@ -40,5 +42,33 @@ public class DataDosen {
             }
             dataDosen[j] = temp;
         }
+    }
+
+    int[] pencarianDataSequential(String nama) {
+        int[] hasil = new int[idx];
+        int count = 0;
+
+        for (int i = 0; i < idx; i++) {
+            if (dataDosen[i].nama.equalsIgnoreCase(nama)) {
+                hasil[count++] = i;
+            }
+        }
+
+        return Arrays.copyOf(hasil, count);
+    }
+
+    int pencarianDataBinary(int usia, int left, int right) {
+        if (right >= left) {
+            int mid = left + (right - left) / 2;
+
+            if (dataDosen[mid].usia == usia) {
+                return mid;
+            } else if (dataDosen[mid].usia > usia) {
+                return pencarianDataBinary(usia, left, mid - 1);
+            } else {
+                return pencarianDataBinary(usia, mid + 1, right);
+            }
+        }
+        return -1;
     }
 }

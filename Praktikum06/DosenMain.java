@@ -1,6 +1,7 @@
 package Praktikum06;
 
 import java.util.Scanner;
+import java.util.Arrays;
 
 public class DosenMain {
     public static void main(String[] args) {
@@ -14,7 +15,9 @@ public class DosenMain {
             System.out.println("2. Tampil Data Dosen");
             System.out.println("3. Sorting ASC (Usia Termuda ke Tertua)");
             System.out.println("4. Sorting DSC (Usia Tertua ke Termuda)");
-            System.out.println("5. Keluar");
+            System.out.println("5. Cari Dosen berdasarkan Nama (Sequential)");
+            System.out.println("6. Cari Dosen berdasarkan Usia (Binary)");
+            System.out.println("7. Keluar");
             System.out.print("Pilih menu: ");
             pilihan = sc.nextInt();
             sc.nextLine();
@@ -53,13 +56,41 @@ public class DosenMain {
                     break;
 
                 case 5:
+                    System.out.print("Masukkan nama yang ingin dicari: ");
+                    String cariNama = sc.nextLine();
+                    int[] hasilNama = listDosen.pencarianDataSequential(cariNama);
+
+                    if (hasilNama.length > 0) {
+                        System.out.println("Dosen dengan nama " + cariNama + " ditemukan pada indeks " + Arrays.toString(hasilNama));
+                        if (hasilNama.length > 1) {
+                            System.out.println("Peringatan: Terdapat lebih dari satu hasil pencarian.");
+                        }
+                    } else {
+                        System.out.println("Dosen dengan nama " + cariNama + " tidak ditemukan.");
+                    }
+                    break;
+
+                case 6:
+                    listDosen.sortingASC();
+                    System.out.print("Masukkan usia yang ingin dicari: ");
+                    int cariUsia = sc.nextInt();
+                    int hasilUsia = listDosen.pencarianDataBinary(cariUsia, 0, listDosen.idx - 1);
+
+                    if (hasilUsia != -1) {
+                        System.out.println("Dosen dengan usia " + cariUsia + " ditemukan pada indeks " + hasilUsia);
+                    } else {
+                        System.out.println("Dosen dengan usia " + cariUsia + " tidak ditemukan.");
+                    }
+                    break;
+
+                case 7:
                     System.out.println("Program selesai.");
                     break;
 
                 default:
                     System.out.println("Pilihan tidak valid!");
             }
-        } while (pilihan != 5);
+        } while (pilihan != 7);
 
         sc.close();
     }
